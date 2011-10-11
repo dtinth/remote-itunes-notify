@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 
+if (!isset($argv[1])) die("usage: $argv[0] <hostname>\n");
+
 $last = '';
 $where = escapeshellarg($argv[1]);
 $script = escapeshellarg(escapeshellarg(
@@ -13,7 +15,7 @@ while (true) {
 	if ($song != $last) {
 		echo strftime('[%H:%M:%S] ') . $song . "\n";
 		$data = explode(' ----- ', $song);
-		system('notify-send ' . escapeshellarg($data[0]) . ' ' . escapeshellarg("\n" . $data[1] . "\n\n" . $data[2]));
+		system('notify-send ' . escapeshellarg($data[0] . ' - ' . $data[1]) . ' ' . escapeshellarg("\n" . $data[2]));
 		$last = $song;
 	}
 
